@@ -5,7 +5,7 @@ import java.sql.*;
  * 创建时间:2014-6-23下午3:01:15
  * 类名:Database
  * 创建者:qinzhenning
- * 功能:
+ * 功能:定义数据的操作方法
  */
 public class Database {
 	/**
@@ -75,7 +75,7 @@ public class Database {
 	
 
 	
-	//收到
+	//测试
   	public static void main(String[] args) {
   	
   		Database test = new Database();
