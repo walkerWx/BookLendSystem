@@ -9,6 +9,6 @@ import edu.nju.booklend.data.domain.Borrower;
 
 public interface BorrowerRepository extends CrudRepository<Borrower, String> {
 
-	public List<Borrower> fingByIdAndPassword(String id, String password);
+	public List<Borrower> findByIdAndPassword(String id, String password);
 
 }
