@@ -17,6 +17,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private AdministratorRepository administratorRepository;
+	
 	@Autowired
 	private BorrowerRepository borrowerRepository;
 	
@@ -30,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean checkBorrower(String id, String password) {
 		
-		return borrowerRepository.fingByIdAndPassword(id,password).size() != 0;
+		return borrowerRepository.findByIdAndPassword(id,password).size() != 0;
 	}
 
 }
