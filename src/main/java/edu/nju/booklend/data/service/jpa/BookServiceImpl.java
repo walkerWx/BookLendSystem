@@ -3,12 +3,17 @@ package edu.nju.booklend.data.service.jpa;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.nju.booklend.data.domain.Book;
 import edu.nju.booklend.data.repository.BookRepository;
 import edu.nju.booklend.data.service.BookService;
 
+@Service("bookService")
+@Repository
+@Transactional
 public class BookServiceImpl implements BookService {
 
 	@Autowired

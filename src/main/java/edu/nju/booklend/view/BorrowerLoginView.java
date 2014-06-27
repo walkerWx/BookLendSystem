@@ -21,7 +21,8 @@ import javax.swing.JTextField;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-import edu.nju.booklend.data.service.BorrowRecordService;
+import edu.nju.booklend.data.service.BookService;
+import edu.nju.booklend.data.service.BorrowerService;
 import edu.nju.booklend.data.service.LoginService;
 
 public class BorrowerLoginView extends JFrame{
@@ -39,9 +40,10 @@ public class BorrowerLoginView extends JFrame{
 	JPasswordField passwordField;
 	JButton loginJButton,cencelJButton;
 	
-	static GenericXmlApplicationContext ctx;
-
+	static GenericXmlApplicationContext ctx;	
+	static BorrowerService borrowerService;
 	static LoginService loginService;
+	static BookService bookService;
 
 	public void init(){
 		
@@ -66,6 +68,7 @@ public class BorrowerLoginView extends JFrame{
 				String password = new String(values); 
 				if(loginService.checkBorrower(username, password)){
 					new BorrowerView(username);
+					dispose();
 				}else{
 					//提示用户名或密码错误，请重新输入！
 					JOptionPane.showMessageDialog(null, "用户名或密码错误，请重新输入！", "提示",JOptionPane.ERROR_MESSAGE);
@@ -127,6 +130,10 @@ public class BorrowerLoginView extends JFrame{
 		ctx.refresh();
 		loginService=ctx.getBean(
 				"loginService", LoginService.class);
+		borrowerService=ctx.getBean(
+				"borrowerService", BorrowerService.class);
+		bookService=ctx.getBean(
+				"bookService", BookService.class);
 		new BorrowerLoginView();
 	}
 	
