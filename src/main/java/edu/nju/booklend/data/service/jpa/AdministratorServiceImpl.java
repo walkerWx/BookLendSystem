@@ -27,5 +27,11 @@ public class AdministratorServiceImpl implements AdministratorService {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(administratorRepository.findAll());
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Administrator findById(String id){
+		return administratorRepository.findOne(id);
+	}
 
 }

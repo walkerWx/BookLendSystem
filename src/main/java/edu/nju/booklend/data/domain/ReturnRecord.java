@@ -40,7 +40,7 @@ public class ReturnRecord {
 	}
 
 	@Column(name = "return_date")
-	@Type(type = "org.jadira.usertype.drenewDateateandtime.joda.PersistentDateTime")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	@DateTimeFormat(iso = ISO.DATE)
 	public DateTime getReturnDate() {
 		return returnDate;
