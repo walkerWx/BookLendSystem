@@ -19,4 +19,28 @@ public class BorrowerServiceImpl implements BorrowerService {
 		return borrowerRepository.findOne(id);
 	}
 
+	@Override
+	public boolean add(String name, String pass, int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateByName(String name, String pass, int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String findByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

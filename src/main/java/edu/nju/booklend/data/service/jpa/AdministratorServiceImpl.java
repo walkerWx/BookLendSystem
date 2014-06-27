@@ -34,4 +34,28 @@ public class AdministratorServiceImpl implements AdministratorService {
 		return administratorRepository.findOne(id);
 	}
 
+	@Override
+	public boolean add(String id, String name, String pass) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(String id, String name, String pass) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String find(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
