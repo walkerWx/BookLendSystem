@@ -9,6 +9,6 @@ import edu.nju.booklend.data.domain.Administrator;
 public interface AdministratorRepository extends
 		CrudRepository<Administrator, String> {
 
-	public List<Administrator> findByIdAndPassword(String id, String password);
+	public List<Administrator> findByUsernameAndPassword(String username, String password);
 
 }

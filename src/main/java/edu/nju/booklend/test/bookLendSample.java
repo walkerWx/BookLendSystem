@@ -8,6 +8,7 @@ import edu.nju.booklend.data.domain.Administrator;
 import edu.nju.booklend.data.domain.BorrowRecord;
 import edu.nju.booklend.data.service.AdministratorService;
 import edu.nju.booklend.data.service.BorrowRecordService;
+import edu.nju.booklend.data.service.LoginService;
 
 public class bookLendSample {
 
@@ -22,18 +23,18 @@ public class bookLendSample {
 
 		BorrowRecordService borrowRecordService = ctx.getBean(
 				"borrowRecordService", BorrowRecordService.class);
+		
+		LoginService loginService=ctx.getBean(
+				"loginService", LoginService.class);
+		
+		System.out.println(loginService.checkAdministrator("qinzhenning", "123"));
 
 		List<Administrator> admins = administratorService.findAll();
 		List<BorrowRecord> borrowRecords = borrowRecordService.findAll();
 
-		System.out.println(borrowRecords.get(0).getBook().getAuthor());
-//		listAdmins(admins);
 
 	}
 
-	private static void listAdmins(List<Administrator> admins) {
-		System.out.println(admins.get(0).getRealname() + admins.get(0).getId()
-				+ admins.get(0).getPassword() + admins.get(0).getTelephone());
-	}
+	
 
 }

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.nju.booklend.data.domain.Borrower;
 import edu.nju.booklend.data.repository.AdministratorRepository;
+import edu.nju.booklend.data.repository.BorrowerRepository;
 import edu.nju.booklend.data.service.LoginService;
 
 @Service("loginService")
@@ -15,11 +17,20 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private AdministratorRepository administratorRepository;
+	@Autowired
+	private BorrowerRepository borrowerRepository;
+	
 
 	@Override
-	public boolean checkAdministrator(String id, String password) {
+	public boolean checkAdministrator(String username, String password) {
 		// TODO Auto-generated method stub
-		return administratorRepository.findByIdAndPassword(id, password).size() != 0;
+		return administratorRepository.findByUsernameAndPassword(username, password).size() != 0;
+	}
+
+	@Override
+	public boolean checkBorrower(String id, String password) {
+		
+		return borrowerRepository.fingByIdAndPassword(id,password).size() != 0;
 	}
 
 }
