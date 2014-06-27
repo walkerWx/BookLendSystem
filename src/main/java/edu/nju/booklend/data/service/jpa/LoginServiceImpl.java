@@ -1,11 +1,12 @@
 package edu.nju.booklend.data.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.nju.booklend.data.domain.Borrower;
+
 import edu.nju.booklend.data.repository.AdministratorRepository;
 import edu.nju.booklend.data.repository.BorrowerRepository;
 import edu.nju.booklend.data.service.LoginService;
@@ -17,6 +18,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private AdministratorRepository administratorRepository;
+	
 	@Autowired
 	private BorrowerRepository borrowerRepository;
 	
@@ -30,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean checkBorrower(String id, String password) {
 		
-		return borrowerRepository.fingByIdAndPassword(id,password).size() != 0;
+		return borrowerRepository.findByIdAndPassword(id,password).size() != 0;
 	}
 
 }

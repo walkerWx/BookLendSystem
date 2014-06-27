@@ -10,36 +10,36 @@ import edu.nju.booklend.data.repository.BookRepository;
 import edu.nju.booklend.data.service.BookService;
 
 public class BookServiceImpl implements BookService {
-	
+
 	@Autowired
-	private BookRepository bookRepository; 
+	private BookRepository bookRepository;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Book> findByIsbn(String isbn) {
 		// TODO Auto-generated method stub
-		return null;
+		return bookRepository.findByIsbn(isbn);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Book> findByBookName(String bookName) {
 		// TODO Auto-generated method stub
-		return null;
+		return bookRepository.findByBookName(bookName);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Book> findByAuthor(String author) {
 		// TODO Auto-generated method stub
-		return null;
+		return findByAuthor(author);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Book> findByPublisher(String publisher) {
 		// TODO Auto-generated method stub
-		return null;
+		return findByPublisher(publisher);
 	}
 
 }
