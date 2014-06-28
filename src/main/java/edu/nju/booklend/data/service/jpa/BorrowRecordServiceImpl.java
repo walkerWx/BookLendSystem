@@ -23,29 +23,32 @@ public class BorrowRecordServiceImpl implements BorrowRecordService {
 	private BorrowRecordRepository borrowRecordRepository;
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<BorrowRecord> findAll() {
 
 		return Lists.newArrayList(borrowRecordRepository.findAll());
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<BorrowRecord> findByBorrower(Borrower borrower) {
-		
-		return Lists.newArrayList(borrowRecordRepository.findByBorrower(borrower));
+
+		return Lists.newArrayList(borrowRecordRepository
+				.findByBorrower(borrower));
 	}
 
 	@Override
 	public boolean save(BorrowRecord borrowRecord) {
 		// TODO Auto-generated method stub
-		return false;
+		return borrowRecordRepository.save(borrowRecord) != null;
 	}
 
 	@Override
 	public boolean updateReturnStatusById(String id) {
-		
-		return false;
+
+		BorrowRecord borrowRecord = borrowRecordRepository.findOne(id);
+		borrowRecord.setReturnStatus(!borrowRecord.isReturnStatus());
+		return borrowRecordRepository.save(borrowRecord) != null;
 	}
 
 }

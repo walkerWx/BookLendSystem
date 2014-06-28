@@ -57,7 +57,8 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public boolean delete(String id) {
 		// TODO Auto-generated method stub
-		return false;
+		bookRepository.delete(id);
+		return bookRepository.exists(id);
 	}
 
 	@Override
