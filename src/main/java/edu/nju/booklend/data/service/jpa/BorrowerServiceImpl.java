@@ -1,12 +1,18 @@
 package edu.nju.booklend.data.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.nju.booklend.data.domain.Borrower;
 import edu.nju.booklend.data.repository.BorrowerRepository;
 import edu.nju.booklend.data.service.BorrowerService;
 
+@Service("borrowerService")
+@Repository
+@Transactional
 public class BorrowerServiceImpl implements BorrowerService {
 	
 	@Autowired

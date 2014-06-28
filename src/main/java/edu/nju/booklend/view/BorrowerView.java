@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,8 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -41,13 +44,16 @@ public class BorrowerView extends JFrame implements MouseListener{
 
 
 
-	private JPanel mainpanel,choiceJPanel,centerJPanel,searchBookJPanel,borroweredBookJPanel;
-	private JLabel headbackJLabel,centerbackJLabel,choicebackJLabel,moveLabel,searchBookJLabel,borroweredBookJLabel;
+	private JPanel mainpanel,choiceJPanel,centerJPanel,searchBookJPanel,borroweredBookJPanel,infoJPanel;
+	private JLabel headbackJLabel,centerbackJLabel,choicebackJLabel,moveLabel,searchBookJLabel,
+			borroweredBookJLabel,infoJLabel;
 	private JTextField bookSearchTextField;
 	private JComboBox bookSearchComboBox;
 	private JButton bookSearchButton;
 	private JTextArea bookSearchTextArea;
-	private JScrollPane bookSearchScrollPane;
+	private JScrollPane bookSearchScrollPane,infoJScrollPane;
+	private JTable infoJTable;
+	private DefaultTableModel infoModel;
 	private ImageIcon headIcon,choicebackIcon,centerbackIcon;
 	private CardLayout card;
 	GenericXmlApplicationContext ctx;
@@ -118,17 +124,62 @@ public class BorrowerView extends JFrame implements MouseListener{
 		borroweredBookJLabel.setFont(new Font("宋体",Font.PLAIN,20));
 		borroweredBookJLabel.addMouseListener(this);
 	
+		//消息
+		infoJPanel=new JPanel();
+		infoJPanel.setBounds(265, 230, 600, 380);
+		infoJLabel=new JLabel("系统消息");
+		infoJLabel.setFont(new Font("宋体",Font.PLAIN,20));
+		infoJLabel.setBounds(80, 140, 350, 60);
+		infoJLabel.addMouseListener(this);
+		
+		//infoJpanel
+		ArrayList<String> infoList=new ArrayList<String>();
+		
+		String s1="lalalalala";
+		String s2="kakakkakak";
+		String s3="hhahahahha";
+		String s4="fafaffafaf";
+		infoList.add(s1);
+		infoList.add(s2);
+		infoList.add(s3);
+		infoList.add(s4);
+		
+		String infohead[]={"系统消息"};
+		Object[][] infocell=new Object[infoList.size()][1];
+		for(int i=0;i<infoList.size();i++){
+			infocell[i][0]=infoList.get(i);
+		}
+		infoJTable = new JTable(){
+			public boolean isCellEditable(int a,int b){
+				return false;
+			}
+		};
+		infoModel=new DefaultTableModel(infocell,infohead);
+		infoJTable.setModel(infoModel);
+		infoJTable.setRowHeight(25);
+		infoJTable.setFont(new Font("", Font.PLAIN, 20));			
+		
+		infoJScrollPane=new JScrollPane();
+		infoJScrollPane.setViewportView(infoJTable);
+		
+		infoJPanel.setLayout(null);
+		infoJPanel.add(infoJScrollPane);		infoJScrollPane.setBounds(0, 0, 600, 300);
+		
+		
+		
 		card = new CardLayout();
 		centerJPanel = new JPanel();
 		centerJPanel.setLayout(card);
 		centerJPanel.setBounds(265, 230, 600, 380);
 		centerJPanel.add(searchBookJPanel, "searchBook");
 		centerJPanel.add(borroweredBookJPanel, "borroweredBook");
+		centerJPanel.add(infoJPanel,"info");
 		
 		choiceJPanel = new JPanel();
 		choiceJPanel.setBounds(0, 168, 225, 575);
 		choiceJPanel.add(searchBookJLabel);
 		choiceJPanel.add(borroweredBookJLabel);
+		choiceJPanel.add(infoJLabel);
 		choicebackJLabel = new JLabel();
 		choicebackJLabel.setIcon(choicebackIcon);
 		choicebackJLabel.setBounds(0, 0, 1000, 540);
@@ -141,9 +192,9 @@ public class BorrowerView extends JFrame implements MouseListener{
 	
 	public BorrowerView(String username){
 		
-		ctx=BorrowerLoginView.ctx;
-		borrowerService=ctx.getBean(
-				"borrowerService", BorrowerService.class);
+//		ctx=BorrowerLoginView.ctx;
+//		borrowerService=ctx.getBean(
+//				"borrowerService", BorrowerService.class);
 		
 		init();
 		this.setSize(800, 675);
@@ -199,6 +250,9 @@ public class BorrowerView extends JFrame implements MouseListener{
 		if(e.getSource()==bookSearchTextField){
 			bookSearchTextField.setText("");
 		}
+		if(e.getSource()==infoJLabel){
+			card.show(centerJPanel, "info");
+		}
 
 	}
 	//鼠标按下
@@ -219,6 +273,10 @@ public class BorrowerView extends JFrame implements MouseListener{
 			borroweredBookJLabel.setForeground(Color.RED);
 			setCursor(Cursor.HAND_CURSOR);
 		}
+		if(e.getSource()==infoJLabel){
+			infoJLabel.setForeground(Color.RED);
+			setCursor(Cursor.HAND_CURSOR);
+		}
 	}
 	//鼠标离开
 	public void mouseExited(MouseEvent e) {
@@ -232,6 +290,10 @@ public class BorrowerView extends JFrame implements MouseListener{
 		}
 		if(e.getSource()==bookSearchTextField){
 			bookSearchTextField.setText("请输入书名或作者等");
+		}
+		if(e.getSource()==infoJLabel){
+			infoJLabel.setForeground(Color.BLACK);
+			setCursor(Cursor.getDefaultCursor());
 		}
 	}
 	
