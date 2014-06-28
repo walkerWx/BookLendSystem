@@ -704,11 +704,11 @@ public class AdminView extends JFrame {
 				AdministratorService administratorService = ctx.getBean(
 						"administratorService", AdministratorService.class);
 				if(administratorService.delete(id)){
-					JOptionPane.showMessageDialog(null, "删除管理员成功!");
+					JOptionPane.showMessageDialog(null, "删除管理员失败!");
 					adIdField2.setText("");
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "删除管理员失败!");
+					JOptionPane.showMessageDialog(null, "删除管理员成功!");
 					adIdField2.setText("");
 				}
 			}
