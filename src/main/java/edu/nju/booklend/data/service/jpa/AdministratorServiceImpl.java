@@ -35,10 +35,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 	}
 
 	@Override
-	public boolean add(String id, String name, String pass) {
+	public boolean add(String name, String pass) {
 		// TODO Auto-generated method stub
 		Administrator administrator = new Administrator();
-		administrator.setId(id);
 		administrator.setUsername(name);
 		administrator.setPassword(pass);
 		return administratorRepository.save(administrator) != null;

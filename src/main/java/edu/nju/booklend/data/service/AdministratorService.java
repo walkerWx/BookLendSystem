@@ -9,7 +9,7 @@ public interface AdministratorService {
 	public List<Administrator> findAll();
 	public Administrator findById(String id);
 	
-	public boolean add(String id,String  name, String pass);
+	public boolean add(String  name, String pass);
 	
 	public boolean delete(String id);
 	

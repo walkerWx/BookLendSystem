@@ -18,8 +18,6 @@ public class Administrator {
 	private String id;
 	private String username;
 	private String password;
-	private String realname;
-	private String telephone;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -48,24 +46,6 @@ public class Administrator {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	@Column(name = "realname")
-	public String getRealname() {
-		return realname;
-	}
-
-	public void setRealname(String realname) {
-		this.realname = realname;
-	}
-
-	@Column(name = "telephone")
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
 	}
 
 }
