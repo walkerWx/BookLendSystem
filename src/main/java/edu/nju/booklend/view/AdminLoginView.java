@@ -1,6 +1,7 @@
 package edu.nju.booklend.view;
 
 import java.awt.Color;
+
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -70,6 +71,7 @@ public class AdminLoginView extends JFrame{
 
 				if(loginService.checkAdministrator(username, password)){
 					new AdminView();
+					dispose();
 				}else{
 					//提示用户名或密码错误，请重新输入！
 					JOptionPane.showMessageDialog(null, "用户名或密码错误，请重新输入！", "提示",JOptionPane.ERROR_MESSAGE);
