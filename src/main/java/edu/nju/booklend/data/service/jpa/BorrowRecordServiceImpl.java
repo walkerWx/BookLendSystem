@@ -36,4 +36,16 @@ public class BorrowRecordServiceImpl implements BorrowRecordService {
 		return Lists.newArrayList(borrowRecordRepository.findByBorrower(borrower));
 	}
 
+	@Override
+	public boolean save(BorrowRecord borrowRecord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateReturnStatusById(String id) {
+		
+		return false;
+	}
+
 }
