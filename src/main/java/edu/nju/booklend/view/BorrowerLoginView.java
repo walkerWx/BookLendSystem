@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import edu.nju.booklend.data.service.BookService;
+import edu.nju.booklend.data.service.BorrowRecordService;
 import edu.nju.booklend.data.service.BorrowerService;
 import edu.nju.booklend.data.service.LoginService;
 
@@ -44,6 +45,7 @@ public class BorrowerLoginView extends JFrame{
 	static BorrowerService borrowerService;
 	static LoginService loginService;
 	static BookService bookService;
+	static BorrowRecordService borrowRecordService;
 
 	public void init(){
 		
@@ -134,6 +136,7 @@ public class BorrowerLoginView extends JFrame{
 				"borrowerService", BorrowerService.class);
 		bookService=ctx.getBean(
 				"bookService", BookService.class);
+		borrowRecordService=ctx.getBean("borrowRecordService", BorrowRecordService.class);
 		new BorrowerLoginView();
 	}
 	

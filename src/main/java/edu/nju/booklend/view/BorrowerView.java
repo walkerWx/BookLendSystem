@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -22,10 +23,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import edu.nju.booklend.data.domain.Book;
+import edu.nju.booklend.data.domain.Borrower;
 
 
 
@@ -44,17 +49,22 @@ public class BorrowerView extends JFrame implements MouseListener{
 
 	private JPanel mainpanel,choiceJPanel,centerJPanel,searchBookJPanel,borroweredBookJPanel,messageJPanel;
 	private JLabel headbackJLabel,centerbackJLabel,choicebackJLabel,moveLabel,searchBookJLabel,
-	               borroweredBookJLabel,messageJLabel,borroweredheadJLabel;
+	               borroweredBookJLabel,messageJLabel,borroweredheadJLabel,label1;
 	private JTextField bookSearchTextField;
 	private JComboBox bookSearchComboBox;
-	private JButton bookSearchButton;
+	private JButton bookSearchButton,borrowBookButton;
 	private JTextArea bookSearchTextArea;
 	private JScrollPane bookSearchScrollPane;
+	private JTable bookJTable;
+	private TableModel bookModel;
 	private ImageIcon headIcon,choicebackIcon,centerbackIcon;
 	private CardLayout card;
+	private String username;
+	private Borrower borrower;
 
 	
 	public void init() {
+		
 
 		
 		//背景图片
@@ -91,13 +101,29 @@ public class BorrowerView extends JFrame implements MouseListener{
 		bookSearchButton=new JButton("检索");		
 		bookSearchButton.setFont(new Font("宋体",Font.PLAIN,20));
 		bookSearchButton.setBounds(450, 30, 100, 40);
+		
+		//检索到的图书列表
+		bookSearchTextArea=new JTextArea();
+		bookSearchScrollPane=new JScrollPane(bookSearchTextArea);
+		bookSearchScrollPane.setBounds(80,100,470,200);
+		bookSearchScrollPane.setVisible(false);
+		bookSearchTextArea.setEditable(false);
+		bookSearchTextArea.setFont(new Font("宋体",Font.PLAIN,15));
+		
+    	label1=new JLabel("没有找到您要找的图书，请您检查是否输入了正确的信息！");
+    	label1.setFont(new Font("宋体",Font.PLAIN,20));
+    	label1.setBounds(50, 200, 550, 40);
+    	label1.setVisible(false);
+    	searchBookJPanel.add(label1);
+		
 		bookSearchButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				String searchtype=(String)bookSearchComboBox.getSelectedItem();
-				List<Book> bookList;
+				List<Book> bookList = new ArrayList<Book>();
                 if(searchtype.equals("ISBN")){
-                	bookList=BorrowerLoginView.bookService.findByIsbn(bookSearchTextField.getText());
+                	bookList=BorrowerLoginView.bookService.findByIsbn(bookSearchTextField.getText());               	
+               	
                 }else if(searchtype.equals("书名")){
                 	bookList=BorrowerLoginView.bookService.findByBookName(bookSearchTextField.getText());
                 }else if(searchtype.equals("作者")){
@@ -105,15 +131,69 @@ public class BorrowerView extends JFrame implements MouseListener{
                 }else if(searchtype.equals("出版社")){
                 	bookList=BorrowerLoginView.bookService.findByPublisher(bookSearchTextField.getText());
                 }
+                
+                if(bookList.size()==0){
+
+                	borrowBookButton.setVisible(false);
+                	bookSearchScrollPane.setVisible(false);
+                	label1.setVisible(true);
+                	
+            	}else{
+            		label1.setVisible(false);
+            		bookSearchScrollPane.setVisible(true);
+            		borrowBookButton.setVisible(true);
+            		String[] bookheaders = { "图书ISBN","图书名称", "作者", "出版社","出版年份","类别" };
+            		Object[][] bookcell = new Object[bookList.size()][6];
+            		for(int i=0;i<bookList.size();i++){
+            			bookcell[i][0]=bookList.get(i).getIsbn();
+            	    	bookcell[i][1]=bookList.get(i).getBookName();
+            	    	bookcell[i][2]=bookList.get(i).getAuthor();
+            	    	bookcell[i][3]=bookList.get(i).getPublisher();
+            	    	bookcell[i][4]=bookList.get(i).getYear();
+            	    	bookcell[i][5]=bookList.get(i).getType();
+            	    }
+            		bookJTable = new JTable(){
+
+						private static final long serialVersionUID = 1L;
+
+						public boolean isCellEditable(int a,int b){
+            				return false;
+            			}
+            		};
+            		bookModel=new DefaultTableModel(bookcell,bookheaders);
+            		bookJTable.setModel(bookModel);
+            		bookJTable.setRowHeight(25);
+            		bookJTable.setFont(new Font("宋体",Font.PLAIN,10));
+            		bookSearchScrollPane.setViewportView(bookJTable);
+            		
+            		
+            	}
 				
 			}
 		});
 		
-		//检索到的图书列表
-		bookSearchTextArea=new JTextArea();
-		bookSearchScrollPane=new JScrollPane(bookSearchTextArea);
-		bookSearchScrollPane.setBounds(80,100,470,270);
-		bookSearchTextArea.setEditable(false);
+        //借阅
+		borrowBookButton=new JButton("借阅");
+		borrowBookButton.setFont(new Font("宋体",Font.PLAIN,20));
+		borrowBookButton.setBounds(450, 320, 100, 40);
+		borrowBookButton.setVisible(false);
+		searchBookJPanel.add(borrowBookButton);
+		borrowBookButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				int[] rows=bookJTable.getSelectedRows();
+				for (int i = 0; i < rows.length; i++) {
+					String isbn=bookJTable.getValueAt(rows[i], 0).toString();
+					//看借阅记录里面有没有这本书
+					//借阅权限够不
+					//借阅数量够不
+					//得到类别
+					borrower=BorrowerLoginView.borrowerService.findById(username);
+					
+				}
+				
+			}
+		});
 		
 		searchBookJPanel.add(bookSearchTextField);
 		searchBookJPanel.add(bookSearchComboBox);
@@ -133,7 +213,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 		borroweredheadJLabel=new JLabel();
 		borroweredheadJLabel.setText("您已经借阅了以下图书：");
 		borroweredheadJLabel.setFont(new Font("宋体",Font.PLAIN,20));
-		borroweredheadJLabel.setBounds(0,0,250,60);
+		borroweredheadJLabel.setBounds(0,0,300,60);
 		borroweredBookJPanel.add(borroweredheadJLabel);
 		borroweredBookJPanel.setLayout(null);
 	
@@ -210,7 +290,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 		
 		this.add(mainpanel);
 		this.setVisible(true);
-		
+		this.username=username;
 
 
 	}
@@ -219,13 +299,25 @@ public class BorrowerView extends JFrame implements MouseListener{
 	//鼠标点击
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource()==searchBookJLabel){
-			card.show(centerJPanel, "searchBook");		
+			card.show(centerJPanel, "searchBook");	
+			borroweredBookJLabel.setForeground(Color.BLACK);
+			messageJLabel.setForeground(Color.BLACK);
+			searchBookJLabel.setForeground(Color.blue);
+			setCursor(Cursor.HAND_CURSOR);
 		}
 		if(e.getSource()==borroweredBookJLabel){
-			card.show(centerJPanel, "borroweredBook");		
+			card.show(centerJPanel, "borroweredBook");	
+			borroweredBookJLabel.setForeground(Color.blue);
+			messageJLabel.setForeground(Color.BLACK);
+			searchBookJLabel.setForeground(Color.BLACK);
+			//判断有没有借阅记录
+			
 		}
 		if(e.getSource()==messageJLabel){
 			card.show(centerJPanel, "message");		
+			borroweredBookJLabel.setForeground(Color.BLACK);
+			messageJLabel.setForeground(Color.blue);
+			searchBookJLabel.setForeground(Color.BLACK);
 		}
 		if(e.getSource()==bookSearchTextField){
 			bookSearchTextField.setText("");
@@ -258,20 +350,30 @@ public class BorrowerView extends JFrame implements MouseListener{
 	//鼠标离开
 	public void mouseExited(MouseEvent e) {
 		if(e.getSource()==searchBookJLabel){
-			searchBookJLabel.setForeground(Color.BLACK);
-			setCursor(Cursor.getDefaultCursor());
+			if(searchBookJLabel.getForeground().equals(Color.blue)){
+				searchBookJLabel.setForeground(Color.blue);
+			}else{
+			    searchBookJLabel.setForeground(Color.BLACK);
+			    setCursor(Cursor.getDefaultCursor());
+			}
 		}
 		if(e.getSource()==borroweredBookJLabel){
-			borroweredBookJLabel.setForeground(Color.BLACK);
-			setCursor(Cursor.getDefaultCursor());
+			if(borroweredBookJLabel.getForeground().equals(Color.blue)){
+				
+			}else{
+			   borroweredBookJLabel.setForeground(Color.BLACK);
+			   setCursor(Cursor.getDefaultCursor());
+			}
 		}
 		if(e.getSource()==messageJLabel){
-			messageJLabel.setForeground(Color.BLACK);
-			setCursor(Cursor.getDefaultCursor());
+			if(messageJLabel.getForeground().equals(Color.blue)){
+				
+			}else{
+			   messageJLabel.setForeground(Color.BLACK);
+			   setCursor(Cursor.getDefaultCursor());
+			}
 		}
-		if(e.getSource()==bookSearchTextField){
-			bookSearchTextField.setText("请输入书名或作者等");
-		}
+
 	}
 	
 	
