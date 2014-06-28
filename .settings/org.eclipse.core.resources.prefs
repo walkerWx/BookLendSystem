@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'master' of https://github.com/walkerWx/BookLendSystem.git
 eclipse.preferences.version=1
 encoding//src/main/java/edu/nju/booklend/view=GBK
 encoding//src/main/java/edu/nju/booklend/view/BorrowerView.java=UTF-8

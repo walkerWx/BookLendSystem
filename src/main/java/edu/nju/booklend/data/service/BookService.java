@@ -13,5 +13,15 @@ public interface BookService {
 	public List<Book> findByAuthor(String author); 
 	
 	public List<Book> findByPublisher(String publisher); 
+	
+	//type  0Ϊ���䱾  1Ϊ��
+	public boolean add(String id,String isbn,String name,String author,String publish,String year,int num,int type);
+	
+	public boolean delete(String id);
+	
+	//type  0Ϊ���䱾  1Ϊ��,���ID�޸�������Ϣ
+	public boolean update(String id,String isbn,String name,String author,String publish,String year,int num,int type);
 
+	//ÿ�����Ժ�+ /n
+	public String find(String id);
 }

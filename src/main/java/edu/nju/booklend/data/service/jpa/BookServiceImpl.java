@@ -47,4 +47,30 @@ public class BookServiceImpl implements BookService {
 		return bookRepository.findByPublisher(publisher);
 	}
 
+	@Override
+	public boolean add(String id, String isbn, String name, String author,
+			String publish, String year, int num, int type) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(String id, String isbn, String name, String author,
+			String publish, String year, int num, int type) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String find(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

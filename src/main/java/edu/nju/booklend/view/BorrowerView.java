@@ -51,7 +51,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 
 	private JPanel mainpanel,choiceJPanel,centerJPanel,searchBookJPanel,borroweredBookJPanel,messageJPanel;
 	private JLabel headbackJLabel,centerbackJLabel,choicebackJLabel,moveLabel,searchBookJLabel,
-	               borroweredBookJLabel,messageJLabel,borroweredheadJLabel,label1;
+	               borroweredBookJLabel,messageJLabel,borroweredheadJLabel,label1,nameJLabel;
 	private JTextField bookSearchTextField;
 	private JComboBox bookSearchComboBox;
 	private JButton bookSearchButton,borrowBookButton;
@@ -89,7 +89,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 		searchBookJPanel.setBounds(255, 230, 600, 350);
 		searchBookJPanel.setBackground(Color.WHITE);
 		searchBookJLabel=new JLabel("查询图书");
-		searchBookJLabel.setBounds(80, 80, 350, 60);
+		searchBookJLabel.setBounds(80, 180, 350, 60);
 		searchBookJLabel.setFont(new Font("宋体",Font.PLAIN,20));
 		searchBookJLabel.addMouseListener(this);
 		
@@ -247,12 +247,12 @@ public class BorrowerView extends JFrame implements MouseListener{
 		searchBookJPanel.add(bookSearchScrollPane);
 		searchBookJPanel.setLayout(null);
 		
-		//已借图书
+		//借阅记录
 		borroweredBookJPanel= new JPanel();
 		borroweredBookJPanel.setBounds(255, 230, 600, 350);
 		borroweredBookJPanel.setBackground(Color.WHITE);
-		borroweredBookJLabel=new JLabel("已借图书");
-		borroweredBookJLabel.setBounds(80, 110, 350, 60);
+		borroweredBookJLabel=new JLabel("借阅记录");
+		borroweredBookJLabel.setBounds(80, 210, 350, 60);
 		borroweredBookJLabel.setFont(new Font("宋体",Font.PLAIN,20));
 		borroweredBookJLabel.addMouseListener(this);
 		
@@ -268,7 +268,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 		messageJPanel.setBounds(255, 230, 600, 350);
 		messageJPanel.setBackground(Color.WHITE);
 		messageJLabel=new JLabel("查看消息");
-		messageJLabel.setBounds(80, 140, 350, 60);
+		messageJLabel.setBounds(80, 240, 350, 60);
 		messageJLabel.setFont(new Font("宋体",Font.PLAIN,20));
 		messageJLabel.addMouseListener(this);
 		
@@ -280,11 +280,17 @@ public class BorrowerView extends JFrame implements MouseListener{
 		centerJPanel.add(borroweredBookJPanel, "borroweredBook");
 		centerJPanel.add(messageJPanel, "message");
 		
+		//
+		nameJLabel=new JLabel("用户"+username);
+		nameJLabel.setFont(new Font("宋体",Font.PLAIN,20));
+		nameJLabel.setBounds(10, 50, 200, 40);
+		
 		choiceJPanel = new JPanel();
 		choiceJPanel.setBounds(0, 168, 225, 575);
 		choiceJPanel.add(searchBookJLabel);
 		choiceJPanel.add(borroweredBookJLabel);
 		choiceJPanel.add(messageJLabel);
+		choiceJPanel.add(nameJLabel);
 		choicebackJLabel = new JLabel();
 		choicebackJLabel.setIcon(choicebackIcon);
 		choicebackJLabel.setBounds(0, 0, 1000, 540);
@@ -297,7 +303,7 @@ public class BorrowerView extends JFrame implements MouseListener{
 	
 	public BorrowerView(String username){
 		
-
+		this.username=username;
 		
 		init();
 		this.setSize(800, 675);
@@ -329,14 +335,14 @@ public class BorrowerView extends JFrame implements MouseListener{
 		
 		mainpanel.add(choiceJPanel);
 		mainpanel.add(centerJPanel);
-		mainpanel.add(moveLabel);
+		//mainpanel.add(moveLabel);
 		moveLabel.setBounds(275, 80, 450, 30);
 		mainpanel.add(headbackJLabel);
 		//mainpanel.add(centerbackJLabel);
 		
 		this.add(mainpanel);
 		this.setVisible(true);
-		this.username=username;
+		
 
 
 	}
