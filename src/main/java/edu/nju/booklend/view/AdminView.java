@@ -618,14 +618,10 @@ public class AdminView extends JFrame {
 		 */
 		JLabel title = new JLabel("添加管理员:");
 		title.setFont(new Font("", Font.PLAIN, 20));
-		JLabel adIdJLabel = new JLabel("管理员编号");
-		adIdJLabel.setFont(new Font("", Font.PLAIN, 20));
 		JLabel adNameJLabel = new JLabel("用   户   名 ");
 		adNameJLabel.setFont(new Font("", Font.PLAIN, 20));
 		JLabel adPassJLabel = new JLabel("密   	      码");
 		adPassJLabel.setFont(new Font("", Font.PLAIN, 20));
-		adIdField = new JTextField();
-		adIdField.setFont(new Font("", Font.PLAIN, 15));
 		adNameField = new JTextField();
 		adNameField.setFont(new Font("", Font.PLAIN, 15));
 		adPassField = new JTextField();
@@ -636,41 +632,33 @@ public class AdminView extends JFrame {
 		addAdJPanel.setLayout(null);
 		addAdJPanel.add(title);
 		title.setBounds(0, 0, 110, 20);
-		addAdJPanel.add(adIdJLabel);
-		adIdJLabel.setBounds(110, 60, 120, 20);
 		addAdJPanel.add(adNameJLabel);
-		adNameJLabel.setBounds(110, 100, 120, 20);
+		adNameJLabel.setBounds(110, 70, 120, 20);
 		addAdJPanel.add(adPassJLabel);
-		adPassJLabel.setBounds(110, 140, 120, 20);
-		addAdJPanel.add(adIdField);
-		adIdField.setBounds(250, 60, 100, 20);
+		adPassJLabel.setBounds(110, 110, 120, 20);
 		addAdJPanel.add(adNameField);
-		adNameField.setBounds(250, 100, 100, 20);
+		adNameField.setBounds(250, 70, 100, 20);
 		addAdJPanel.add(adPassField);
-		adPassField.setBounds(250, 140, 100, 20);
+		adPassField.setBounds(250, 110, 100, 20);
 		addAdJPanel.add(confirmJButton);
-		confirmJButton.setBounds(140, 190, 70, 20);
+		confirmJButton.setBounds(140, 160, 70, 20);
 		addAdJPanel.add(cancelJButton);
-		cancelJButton.setBounds(250, 190, 70, 20);
+		cancelJButton.setBounds(250, 160, 70, 20);
 
 		confirmJButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String id=adIdField.getText();
 				String name=adNameField.getText();
 				String pass=adPassField.getText();	
 				
 				AdministratorService administratorService = ctx.getBean(
 						"administratorService", AdministratorService.class);
-				if(administratorService.add(id, name, pass)){
+				if(administratorService.add(name, pass)){
 					JOptionPane.showMessageDialog(null, "添加管理员成功!");
-					adIdField.setText("");
 					adNameField.setText("");
 					adPassField.setText("");
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "添加管理员失败!");
-					adIdField.setText("");
 					adNameField.setText("");
 					adPassField.setText("");
 				}
@@ -678,7 +666,6 @@ public class AdminView extends JFrame {
 		});
 		cancelJButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adIdField.setText("");
 				adNameField.setText("");
 				adPassField.setText("");
 
