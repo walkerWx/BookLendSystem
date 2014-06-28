@@ -51,7 +51,25 @@ public class BookServiceImpl implements BookService {
 	public boolean add(String id, String isbn, String name, String author,
 			String publish, String year, int num, int type) {
 		// TODO Auto-generated method stub
-		return false;
+		Book book = new Book();
+		book.setId(id);
+		book.setIsbn(isbn);
+		book.setBookName(name);
+		book.setAuthor(author);
+		book.setPublisher(publish);
+		book.setYear(year);
+		book.setInventory(num);
+		switch (type) {
+		case 0:
+			book.setType("rare");
+			break;
+
+		default:
+			book.setType("normal");
+			break;
+		}
+
+		return bookRepository.save(book) != null;
 	}
 
 	@Override
@@ -65,13 +83,38 @@ public class BookServiceImpl implements BookService {
 	public boolean update(String id, String isbn, String name, String author,
 			String publish, String year, int num, int type) {
 		// TODO Auto-generated method stub
-		return false;
+		Book book = bookRepository.findOne(id);
+
+		if (book == null) {
+			return false;
+		}
+
+		book.setIsbn(isbn);
+		book.setBookName(name);
+		book.setAuthor(author);
+		book.setPublisher(publish);
+		book.setYear(year);
+		book.setInventory(num);
+		switch (type) {
+		case 0:
+			book.setType("rare");
+			break;
+
+		default:
+			book.setType("normal");
+			break;
+		}
+
+		return bookRepository.save(book) != null;
 	}
 
 	@Override
 	public String find(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		Book book = bookRepository.findOne(id);
+		return book.getId() + "\n" + book.getIsbn() + "\n" + book.getBookName()
+				+ "\n" + book.getAuthor() + "\n" + book.getPublisher() + "\n"
+				+ book.getYear() + "\n" + book.getType() + "\n"
+				+ book.getInventory();
 	}
-
 }

@@ -27,35 +27,47 @@ public class AdministratorServiceImpl implements AdministratorService {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(administratorRepository.findAll());
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public Administrator findById(String id){
+	@Transactional(readOnly = true)
+	public Administrator findById(String id) {
 		return administratorRepository.findOne(id);
 	}
 
 	@Override
 	public boolean add(String id, String name, String pass) {
 		// TODO Auto-generated method stub
-		return false;
+		Administrator administrator = new Administrator();
+		administrator.setId(id);
+		administrator.setUsername(name);
+		administrator.setPassword(pass);
+		return administratorRepository.save(administrator) != null;
+
 	}
 
 	@Override
 	public boolean delete(String id) {
 		// TODO Auto-generated method stub
-		return false;
+		administratorRepository.delete(id);
+		return administratorRepository.exists(id);
+
 	}
 
 	@Override
 	public boolean update(String id, String name, String pass) {
 		// TODO Auto-generated method stub
-		return false;
+		Administrator administrator = administratorRepository.findOne(id);
+		administrator.setUsername(name);
+		administrator.setPassword(pass);
+		return administratorRepository.save(administrator) != null;
 	}
 
 	@Override
 	public String find(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		Administrator administrator = administratorRepository.findOne(id);
+		return administrator.getId() + "\n" + administrator.getUsername()
+				+ "\n" + administrator.getPassword() + "\n";
 	}
 
 }

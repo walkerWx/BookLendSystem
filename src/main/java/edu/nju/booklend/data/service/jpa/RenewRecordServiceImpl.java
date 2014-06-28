@@ -14,7 +14,6 @@ import edu.nju.booklend.data.service.RenewRecordService;
 public class RenewRecordServiceImpl implements RenewRecordService {
 
 	@Override
-	@Transactional(readOnly=true)
 	public boolean renewBook(BorrowRecord borrowRecord) {
 		// TODO Auto-generated method stub
 		return false;
