@@ -900,7 +900,7 @@ public class AdminView extends JFrame {
 				int i=identityJCombobox.getSelectedIndex();
 				
 				BorrowerService borrowService = ctx.getBean(
-						"borrowService", BorrowerService.class);
+						"borrowerService", BorrowerService.class);
 				
 				if(borrowService.add(name, pass, i)){
 					JOptionPane.showMessageDialog(null, "添加借阅人成功！");
@@ -954,7 +954,7 @@ public class AdminView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String id=brIdField2.getText();
 				BorrowerService borrowService = ctx.getBean(
-						"borrowService", BorrowerService.class);
+						"borrowerService", BorrowerService.class);
 				if(borrowService.delete(id)){
 					JOptionPane.showMessageDialog(null, "删除借阅人成功！");
 					brIdField2.setText("");
@@ -1022,7 +1022,7 @@ public class AdminView extends JFrame {
 				int i=identityJCombobox3.getSelectedIndex();
 				
 				BorrowerService borrowService = ctx.getBean(
-						"borrowService", BorrowerService.class);
+						"borrowerService", BorrowerService.class);
 				
 				if(borrowService.updateByName(name, pass, i)){
 					JOptionPane.showMessageDialog(null, "更新借阅人成功！");
@@ -1077,7 +1077,7 @@ public class AdminView extends JFrame {
 				
 				String string=brIdField4.getText();
 				BorrowerService borrowService = ctx.getBean(
-						"borrowService", BorrowerService.class);
+						"borrowerService", BorrowerService.class);
 
 				String s=borrowService.findByName(string);
 				
