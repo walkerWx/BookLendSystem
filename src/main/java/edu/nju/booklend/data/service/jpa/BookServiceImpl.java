@@ -37,14 +37,14 @@ public class BookServiceImpl implements BookService {
 	@Transactional(readOnly = true)
 	public List<Book> findByAuthor(String author) {
 		// TODO Auto-generated method stub
-		return findByAuthor(author);
+		return bookRepository.findByAuthor(author);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Book> findByPublisher(String publisher) {
 		// TODO Auto-generated method stub
-		return findByPublisher(publisher);
+		return bookRepository.findByPublisher(publisher);
 	}
 
 }

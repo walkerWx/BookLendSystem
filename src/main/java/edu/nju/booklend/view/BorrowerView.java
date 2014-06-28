@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import edu.nju.booklend.data.domain.Book;
+import edu.nju.booklend.data.domain.BorrowRecord;
 import edu.nju.booklend.data.domain.Borrower;
 
 
@@ -61,6 +63,8 @@ public class BorrowerView extends JFrame implements MouseListener{
 	private CardLayout card;
 	private String username;
 	private Borrower borrower;
+	private List<BorrowRecord> borrowRecordList;
+	private List<BorrowRecord> borrowRecordByBorrowerList;
 
 	
 	public void init() {
@@ -182,13 +186,55 @@ public class BorrowerView extends JFrame implements MouseListener{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				int[] rows=bookJTable.getSelectedRows();
-				for (int i = 0; i < rows.length; i++) {
-					String isbn=bookJTable.getValueAt(rows[i], 0).toString();
-					//看借阅记录里面有没有这本书
-					//借阅权限够不
-					//借阅数量够不
-					//得到类别
-					borrower=BorrowerLoginView.borrowerService.findById(username);
+				//得到借阅人身份，看借阅权限够不
+				borrower=BorrowerLoginView.borrowerService.findById(username);
+				borrowRecordList=BorrowerLoginView.borrowRecordService.findAll();
+				String isbn;
+				for (int i = 0; i < rows.length; i++) {					
+					
+					isbn=bookJTable.getValueAt(rows[i], 0).toString();	
+					
+					//借阅记录为0，直接借阅
+					if(borrowRecordList.size()==0){
+						System.out.println("0");
+					}else{
+					    //看借阅记录里面有没有这本书,且有没有归还
+					   for (BorrowRecord r:borrowRecordList) {
+						   if((r.getBook().getIsbn().equals(isbn))&&(r.getBorrower().getId().equals(username))&&(!r.isReturnStatus())){
+							   JOptionPane.showMessageDialog(null, "您已经借阅过"+r.getBook().getBookName()+"这本书了！", "提示",JOptionPane.ERROR_MESSAGE);
+						   }
+					   }
+				       //本科生不能借阅珍本图书
+					   if((borrower.getIdentity().equals("undergraduate"))&&(bookJTable.getValueAt(rows[i], 5).toString().equals("rare"))){
+						   JOptionPane.showMessageDialog(null, "您的权限不足以借阅这本书", "提示",JOptionPane.ERROR_MESSAGE);
+					   }else{
+						 //借阅数量够不
+						   borrowRecordByBorrowerList=new ArrayList<BorrowRecord>();
+						   for(BorrowRecord b:BorrowerLoginView.borrowRecordService.findByBorrower(borrower)){
+									   if(!b.isReturnStatus()){
+										   borrowRecordByBorrowerList.add(b);
+									   }
+						   }
+						   int size=borrowRecordByBorrowerList.size();
+						   if(borrower.getIdentity().equals("undergraduate")) {
+							   if(size>4){
+								   JOptionPane.showMessageDialog(null, "您最多只能借阅5本书，请您先归还之前借阅的书再借阅！", "提示",JOptionPane.ERROR_MESSAGE);
+							   }
+						   }else if(borrower.getIdentity().equals("postgraduate")){
+							   if(size>9){
+								   JOptionPane.showMessageDialog(null, "您最多只能借阅10本书，请您先归还之前借阅的书再借阅！", "提示",JOptionPane.ERROR_MESSAGE);
+							   }
+							   
+						   }else{
+							   if(size>19){
+								   JOptionPane.showMessageDialog(null, "您最多只能借阅20本书，请您先归还之前借阅的书再借阅！", "提示",JOptionPane.ERROR_MESSAGE);
+							   }
+						   }
+						   //借阅
+
+					   }
+					   
+					}
 					
 				}
 				

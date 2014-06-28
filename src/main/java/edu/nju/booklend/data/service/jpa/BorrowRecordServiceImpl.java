@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 import edu.nju.booklend.data.domain.BorrowRecord;
+import edu.nju.booklend.data.domain.Borrower;
 import edu.nju.booklend.data.repository.BorrowRecordRepository;
 import edu.nju.booklend.data.service.BorrowRecordService;
 
@@ -22,9 +23,17 @@ public class BorrowRecordServiceImpl implements BorrowRecordService {
 	private BorrowRecordRepository borrowRecordRepository;
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<BorrowRecord> findAll() {
-		// TODO Auto-generated method stub
+
 		return Lists.newArrayList(borrowRecordRepository.findAll());
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<BorrowRecord> findByBorrower(Borrower borrower) {
+		
+		return Lists.newArrayList(borrowRecordRepository.findByBorrower(borrower));
 	}
 
 }
